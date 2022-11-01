@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from './Modal/Modal';
+import SearchBar from './SearchBar/SearchBar';
 
 export default class App extends Component {
   state = {
@@ -10,6 +11,9 @@ export default class App extends Component {
   };
   render() {
     const { showModal } = this.state;
-    return <>{showModal && <Modal />}</>;
+    return <>
+    <SearchBar/>
+    {showModal && <Modal />}
+    </>;
   }
 }
