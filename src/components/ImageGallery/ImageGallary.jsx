@@ -1,3 +1,4 @@
+import Button from 'components/Button/Button';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import React, { Component } from 'react';
 import searchImgApi from 'utils/searchImgApi';
@@ -12,14 +13,26 @@ export default class ImageGallary extends Component {
     page: 1,
   };
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.query !== this.props.query) {
+    if (prevProps.searchQuery !== this.props.searchQuery) {
       this.setState({ isLoading: true });
-      searchImgApi(this.props.query)
+      searchImgApi(this.props.searchQuery,this.state.page)
         .then(data =>
           this.setState({
-            images: data.articles,
-            totalPages: Math.ceil(data.totalResults / 6),
+            images: data.hits,
+            totalPages: Math.ceil(data.totalHits / 12),
           })
+        )
+        .catch(err => this.setState({ error: err.message }))
+        .finally(() => this.setState({ isLoading: false }));
+    }
+
+    if(prevState.totalPages !== this.state.totalPages){
+      this.setState({ isLoading: true });
+      searchImgApi(this.props.searchQuery,this.state.page)
+        .then(data =>
+          this.setState(()=>({
+            images: [...prevState.images, ...data.hits],
+          }))
         )
         .catch(err => this.setState({ error: err.message }))
         .finally(() => this.setState({ isLoading: false }));
@@ -31,12 +44,21 @@ export default class ImageGallary extends Component {
   };
 
   render() {
-    const {images} = this.state
-    console.log(images);
+    const { images, isLoading, totalPages, page } = this.state;
+    console.log('totalpage:', totalPages);
+    console.log('page', page);
     return (
-      <ImgGalleryList>
-        <ImageGalleryItem images={images} />
-      </ImgGalleryList>
+      <>
+        {isLoading && <h1>Loading...</h1>}
+
+          <ImgGalleryList>
+            <ImageGalleryItem images={images} />
+          </ImgGalleryList>
+
+        {images.length > 0 && totalPages > page && (
+          <Button updatePage={this.updatePage} />
+        )}
+      </>
     );
   }
 }
