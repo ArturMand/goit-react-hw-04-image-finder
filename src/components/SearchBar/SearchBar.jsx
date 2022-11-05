@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   SearchBarHeader,
   SearchForm,
@@ -9,20 +10,21 @@ import {
 
 export default class SearchBar extends Component {
   state = {
-    input: "",
+    input: '',
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     this.props.setQuery(this.state.input);
+    this.resetForm();
   };
 
-  resetForm=()=>{
-    this.setState({fetchQuery:''})
-  }
+  resetForm = () => {
+    this.setState({ input: '' });
+  };
 
   render() {
-    const{fetchQuery} = this.state
+    const { input } = this.state;
     return (
       <SearchBarHeader>
         <SearchForm onSubmit={this.handleSubmit}>
@@ -31,16 +33,19 @@ export default class SearchBar extends Component {
           </SearchFormBtn>
 
           <SearchFormInput
-            name="fetchQuery"
             type="text"
             autocomplete="off"
             autoFocus
             placeholder="Search images and photos"
-            value={fetchQuery}
-            onChange={(e) => this.setState({ input: e.target.value })}
+            value={input}
+            onChange={e => this.setState({ input: e.target.value })}
           />
         </SearchForm>
       </SearchBarHeader>
     );
   }
 }
+
+SearchBar.propTypes = {
+  setQuery: PropTypes.func.isRequired,
+};
