@@ -62,7 +62,7 @@ export default class ImageGallary extends Component {
   updatePage = () => {
     this.setState(prev => ({ page: prev.page + 1 }));
   };
-  toggleModal = e => {
+  toggleModal = () => {
     this.setState(prev => ({ showModal: !prev.showModal }));
   };
 
