@@ -5,7 +5,7 @@ const API_KEY = '30230166-d77a5ca1fbfdccb59d50824e5';
 
 const searchImgApi = async (query, page = 1) => {
   try {
-    const res = await axios.get('api', {
+    const res = await axios.get('api/?', {
       params: {
         key: API_KEY,
         q: query,
