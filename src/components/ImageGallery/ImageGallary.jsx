@@ -5,7 +5,7 @@ import searchImgApi from 'utils/searchImgApi';
 import Button from 'components/Button/Button';
 import { ImgGalleryList } from './ImageGAllery.styled';
 import Modal from 'components/Modal/Modal';
-import { Circles } from 'react-loader-spinner';
+import Loader from 'components/Loader/Loader';
 
 export default class ImageGallary extends Component {
   state = {
@@ -78,15 +78,7 @@ export default class ImageGallary extends Component {
       <>
         {error && <h2>{error}</h2>}
 
-        <Circles
-          height="80"
-          width="80"
-          color="#3f51b5"
-          ariaLabel="circles-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={isLoading}
-        />
+        {isLoading && <Loader />}
         <ImgGalleryList>
           <ImageGalleryItem
             images={images}
