@@ -9,14 +9,12 @@ export default function ImageGalleryItem({ src, alt, srcModal }) {
     setShowModal(prev => !prev);
   };
   return (
-    <>
-      <ImgGalleryItem onClick={toggleModal}>
-        <ImgGalleryItemImage src={src} alt={alt} />
-      </ImgGalleryItem>
+    <ImgGalleryItem onClick={toggleModal}>
+      <ImgGalleryItemImage src={src} alt={alt} />
       {showModal && (
         <Modal onCloseModal={toggleModal} url={srcModal} alt={alt} />
       )}
-    </>
+    </ImgGalleryItem>
   );
 }
 

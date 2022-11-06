@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import searchImgApi from 'utils/searchImgApi';
+import { Wrapper } from './App.styled';
 import Button from './Button/Button';
 import ImageGallary from './ImageGallery/ImageGallary';
 import Loader from './Loader/Loader';
@@ -41,7 +42,7 @@ export default function App() {
     setImages([]);
   };
   return (
-    <>
+    <Wrapper>
       {isLoading && <Loader />}
       <SearchBar setQuery={searchQuery} />
       {error && <h2>{error}</h2>}
@@ -50,6 +51,6 @@ export default function App() {
       {images.length > 0 && totalPages > page && (
         <Button updatePage={() => setPage(page + 1)} />
       )}
-    </>
+    </Wrapper>
   );
 }

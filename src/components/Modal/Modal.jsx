@@ -18,7 +18,7 @@ export default function Modal({ url, alt, onCloseModal }) {
     if (e.code === 'Escape') {
       return onCloseModal();
     }
-    if (e.target === e.currentTarget) {
+    if (e.target !== e.currentTarget) {
       return onCloseModal();
     }
   };
